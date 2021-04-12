@@ -1,0 +1,194 @@
+# Module - PowerShell Basics
+# URL: 
+
+# Note: Some demo commands have been modified to work within the lab environment. They will perform the same general tasks, but may have different references such as file directories. Also, any tasks requiring internet access will be skipped.
+# Note: Use of cls in code is to clear-host or clear the screen during demos. This can be skipped during your labs if desired.
+
+# Demo: 
+# Run these commands in Windows PowerShell
+# In this Lab, you will learn how to use various commands in PowerShell to explore the console, and find the information you are looking for. PowerShell's command line interface is built to provide you the information you need through exploration and use of the commands in the console. Using this exploratory approach will deepen your understanding of how PowerShell works and allow you to find answers without always searching on the web for them.
+#In this challenge, you will walk through the demo from the beginning of the course. The demo walks you through creating a .csv report of all the stopped services on a remote server. While you may not know what the commands are doing yet, this will get you hands on with PowerShell, and get you practice typing commands into the console.
+
+#cd c:\scripts\m1
+
+# Introduction to PowerShell
+# Demo: Using PowerShell to Report on Stopped Server Services
+# Run these commands in Windows PowerShell
+get-service                                                                                                                           
+
+# View stopped services
+get-service | where-Object Status -eq 'Stopped'
+
+# View only Name and Status for stopped services                                                  
+get-service | Where-Object Status -eq 'Stopped' | select-object Name,Status 
+
+# Place command output in a variable
+$data = get-service | Where-Object Status -eq 'Stopped' | select-object Name,Status 
+$data
+
+# Note the difference between the output files of the two commands below
+# Output variable data to a .csv file
+$data | out-file .\services.csv                  
+notepad .\services.csv                                                                                               
+
+# Export variable data to a .csv file
+$data | export-csv .\Services2.csv
+                    
+get-content .\services2.csv | more  
+
+# demo: Exploring PowerShell Verbs
+In this first challenge, you will explore get-verb from the PowerShell console. PowerShell uses a Verb-Noun syntax so it's important that you learn the common verbs in PowerShell like get and set. 
+Remember in PowerShell: Almost everything you need to know, you can find out through the shell. Just type and Explore.
+Note: In this challenge, you will be using PowerShell 7, not Windows PowerShell.
+You will start by accessing Client01 through <x>. On the desktop of client01, open the Labs folder and open lab-challenge-02.ps1 in Visual Studio Code.
+Starting in Client01, click on the Window icon in the lower left corner and type PowerShell to display PowerShell 7 (x64) in the start menu.
+Right-click the PowerShell 7 (x64) icon and choose More > Run as administrator to launch the Windows PowerShell Console.
+Right-click the menu bar of the the console window and choose Properties to configure the PowerShell console window.
+This will allow you to change many aspects of the console to enhance your experience. Changes made to the console will rename part of your user profile.
+In the Windows PowerShell Properties window, click the Font tab, choose a larger font of 28, and click OK to apply the changes.
+In the console window, type the following command to list all of the verbs available in the Windows PowerShell console, and click the space bar to scroll through each screen
+get-verb | more
+The command includes | more so all of the output can be reviewed one screen at a time. If you need to exit the output, you can use Ctrl+C to go to the prompt.
+
+#Type the following command to view all of the commands in PowerShell using the Set verb.
+get-verb -Verb Set | more
+In the command output, you will see the default formatting of output is as a table.
+
+#Type the following command to view all of the commands in PowerShell using the set verb and in a list format.
+get-verb -Verb Set | format-list
+In this command, you pipe "|" the output of the command into format-list to display the output as a list. 
+
+#Type the following command to view all of the verbs that are part of the Security group.
+Get-Verb -Group Security | Format-List
+Note: The -group parameter is only available in PowerShell 7 so it will not work if you are using Windows PowerShell.
+
+#Type Exit to close the PowerShell 7 console, or leave it open if you plan to do the next challenge.
+
+# Congratulations! You've completed your first exploration of the PowerShell console using get-verb. Get-verb is a great tool for finding the verbs used by PowerShell, and it will help you as you explore more commands available in PowerShell.
+
+
+
+#Demo: Working with Aliases and Parameters
+# In this lab, you'll get experience using aliases and positional parameters in PowerShell. 
+
+# This command demonstrates gathering information with get-service
+get-service -Name M* -ComputerName Client01,DC01
+
+# This command displays all aliases avaialable in Powershell console
+Get-Alias | More
+
+# This command displays
+get-alias -Definition *service*
+
+# These commands shows the gsv alias in action
+gsv -Name M* -ComputerName Client1,DC01
+help gsv
+
+# These commands show the use of aliases with positional parameters
+gsv M* -Computername Client01,DC01
+gsv M* -Comp Client1,Dc01
+
+
+## Demo: Finding Answers in the PowerShell Console
+#Demo 2 - Working with Help
+#Runa as Standard
+get-help                           
+help                  
+help *Service* | more                        
+help get-service            
+#Elevate to Admin
+start-process PowerShell -RunAs -Credential (Get-Credential)
+update-help
+help get-service
+Man get-service
+help get-service -Examples
+help get-service -full
+help get-service -online  
+Help *about*
+#Add a command showing about file
+
+
+
+## Demo: Researching Commands with Get-Command
+
+#Demo 3 - Get Commands
+Help get-command 
+Help Get-Command -examples
+get-command
+get-command -verb New
+get-command -CommandType Function 
+#You are looking for a command to work with IP Address Configurations on a Windows System
+get-command -name *IP* | More
+get-command -Name *IP* -Module Net*
+Get-command -Name *IP* -Module NetTCPIP
+Help Get-NetIPAddress 
+Help Get-NetIPAddress -Examples
+Get-NetIPAddress
+GIP
+get-command -Name *Fire*
+get-command -Name get-*Fire*
+get-command -Name get-NetFire*
+help Get-NetFirewallRule
+Get-NetFirewallRule | gm
+Get-NetFirewallRule
+Get-NetFirewallRule -Name *Remote* 
+Get-NetFirewallRule -Name *RemoteDesktop* 
+Get-NetFirewallRule -Name *RemoteDesktop* | FT
+Get-NetFirewallRule -Name *RemoteDesktop* | Set-NetFirewallRule -Enabled 'True' -Whatif
+Get-NetFirewallRule -Name *RemoteDesktop* | FT
+
+
+
+
+## Demo: Documenting Your Work in the PowerShell Console
+
+#Demo 4 - Using History and Transcript
+
+# setup commands
+Md c:\scripts\transcripts
+cd c:\scripts
+#cd c:\scripts
+
+#working with get-history
+Help get-history
+Get-history
+#invoke-history -id 24
+
+# Sending get-history output to a text file and viewing in notepad and vscode
+Get-History | Out-File c:\scripts\transcripts\history.txt
+notepad .\transcripts\history.txt
+Code c:\scripts\transcripts\history.txt
+
+Clear-History
+Get-History
+
+# Working with start-transcript
+Help Start-Transcript
+cls
+Start-Transcript -path .\transcripts\transcript1.txt
+Get-service | Where-Object -Property Status -EQ Stopped
+Stop-transcript
+code .\Transcripts\transcript1.txt
+help Start-Transcript
+Start-Transcript -path .\transcripts\Transcript1.txt -append
+Get-service | Where-Object -Property Status -eq Running
+Stop-transcript
+Notepad .\Transcripts\transcript1.txt
+
+
+# Demo: Finding Object Properties with Get-Member
+
+#Demo 5 - Pipelining and Objects
+# Need DNS Name Resolution
+Open Windows PowerShell from the Start Menu using Run As Administrator
+Help Get-Member
+Get-service -computername client01 | Get-Member
+#Add -computername to commands ?
+Get-service | Select-Object Name,MachineName,Status
+Get-Service | Select-Object Name,MachineName,Status | Get-Member
+Get-Service | Where-Object status -eq "Stopped" | More
+::
+Get-Service -ComputerName Client01,DC01 |
+Where-Object status -eq "Stopped" |
+Select-Object Name,MachineName,Status |
+Sort-Object -Property MachineName | More

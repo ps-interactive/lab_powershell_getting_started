@@ -148,12 +148,12 @@ pwsh -command {update-help -force}
 Get-WindowsFeature -Name *RSAT* | Install-windowsfeature
 
 #Download LAB_Files
-$gitlist = “-c http.proxy=http://tstark:pssecrocks@172.31.245.222:8888 clone https://github.com/ps-interactive/lab_visualizing_network_traffic_wireshark.git c:\Users\Administrator\Desktop\lab_visualizing_network_traffic_wireshark”
-start-process  -filepath ‘C:\Program Files\git\bin\git.exe’ -argumentlist $gitlist -wait
-copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_visualizing_network_traffic_wireshark\LAB_FILES\’ -destination ‘c:\Users\Administrator\Desktop\’
-remove-item -recurse -force c:\Users\Administrator\Desktop\lab_visualizing_network_traffic_wireshark
-remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
-remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
+#$gitlist = “-c http.proxy=http://tstark:pssecrocks@172.31.245.222:8888 clone https://github.com/ps-interactive/lab_visualizing_network_traffic_wireshark.git c:\Users\Administrator\Desktop\lab_visualizing_network_traffic_wireshark”
+#start-process  -filepath ‘C:\Program Files\git\bin\git.exe’ -argumentlist $gitlist -wait
+#copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_visualizing_network_traffic_wireshark\LAB_FILES\’ -destination ‘c:\Users\Administrator\Desktop\’
+#remove-item -recurse -force c:\Users\Administrator\Desktop\lab_visualizing_network_traffic_wireshark
+#remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
+#remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
 # Create links
 # Windows PowerShell link
 TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe”"

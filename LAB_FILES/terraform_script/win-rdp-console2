@@ -141,6 +141,29 @@ if ($r -eq 0)
     #initiates reboot 1 so first inc rcount
     rcount_inc
 
+    # Create links
+    # Windows PowerShell link
+        TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe”"
+        $ShortcutFile = "C:\Users\Public\Desktop\Windows PowerShell (x64).lnk"
+        $WScriptShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+        $Shortcut.TargetPath = $TargetFile
+        $Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
+        $Shortcut.Save()
+        $Host.UI.RawUI.BackgroundColor = 'DarkBlue'
+
+    #PowerShell 7 link
+        $TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
+        $ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"
+        $WScriptShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+        $Shortcut.TargetPath = $TargetFile
+        $Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
+        $Shortcut.Save()
+
+        remove-item "c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website"
+        remove-item "c:\Users\Administrator\Desktop\EC2 Feedback.website"
+
     #update-help 
     update-help -force
     pwsh -command {update-help -force}

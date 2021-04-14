@@ -13,11 +13,9 @@
 #once a positive 200 response is provided throughthe proxy to google, the peaceinourtime file is reated in the home folder. Note that the other files are created in the root folder.
 #echo "success">> /home/ubuntu/peaceinourtime
 
-
-
+#Client02 Console Script
 
 #beware of the need to escape characters that terraform uses. https://www.terraform.io/docs/configuration/expressions/strings.html
-
 
 <powershell>
 
@@ -112,7 +110,7 @@ if ($r -eq 0)
 {
 cred_init
 key_pull
-status_update 0 "client01"
+status_update 0 "client02"
 
 Disable-ieESC
 
@@ -154,7 +152,7 @@ copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_powershell_getting_star
 remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_getting_started
 remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
 remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
-
+expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath "c:\demos\shareddirectory"
 # Create links
 # Windows PowerShell link
     $TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
@@ -185,7 +183,7 @@ Set-DnsClientGlobalSetting -SuffixSearchList @("company.co", "us-west-2.ec2-util
 # Rename computer and reboot
 rcount_inc
 
-rename-computer -NewName client01 -restart -verbose | out-file "c:\computer-add.txt" -append
+rename-computer -NewName Client02 -restart -verbose | out-file "c:\computer-add.txt" -append
     
 start-sleep -s 120
     $dc_status=0

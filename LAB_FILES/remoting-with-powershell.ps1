@@ -1,7 +1,9 @@
 
 
 #m4-01
-<nothing>
+#Demo: Requirements for Remoting on Windows PowerShell
+get-service -computername Client01
+
 
 #m4-02
 #Variables in current console

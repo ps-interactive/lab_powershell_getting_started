@@ -1,3 +1,4 @@
+#####Client02 Console Script####
 #! /bin/bash
 #timesyncd attempts to reach out to ntp.ubuntu.com but hangs because it gets not response, this will speed up overall loadtime.
 #systemctl stop systemd-timesyncd
@@ -12,7 +13,6 @@
 #done
 #once a positive 200 response is provided throughthe proxy to google, the peaceinourtime file is reated in the home folder. Note that the other files are created in the root folder.
 #echo "success">> /home/ubuntu/peaceinourtime
-
 
 
 
@@ -154,6 +154,7 @@ copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_powershell_getting_star
 remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_getting_started
 remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
 remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
+
 # Create links
 # Windows PowerShell link
 TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe”"
@@ -165,7 +166,7 @@ $Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershel
 $Shortcut.Save()
 $Host.UI.RawUI.BackgroundColor = 'DarkBlue'
 
-PowerShell 7 link
+# PowerShell 7 link
 $TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
 $ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"
 $WScriptShell = New-Object -ComObject WScript.Shell

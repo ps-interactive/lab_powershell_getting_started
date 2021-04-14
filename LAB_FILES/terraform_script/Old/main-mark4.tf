@@ -496,7 +496,7 @@ data "template_file" "win-rdp-console" {
 }
 
 ##### Windows 2019 RDP ################################################################################################
-#creating EC2 instance resource MYDESKTOP
+#creating EC2 instance resource Client01
 
 resource "aws_instance" "win-rdp-console" {
   ami                         = data.aws_ami.w19.id
@@ -523,7 +523,7 @@ resource "aws_instance" "win-rdp-console" {
 
 }
 
-#Win RDP Console 2
+######################RDP Windows - DC01####################################################################
 data "template_file" "win-rdp-console2" {
     template = file("win-rdp-console2")
     vars = {
@@ -534,7 +534,7 @@ data "template_file" "win-rdp-console2" {
 }
 
 ##### Windows 2019 RDP ################################################################################################
-#creating EC2 instance resource MYDESKTOP
+#creating EC2 instance resource DC01
 
 resource "aws_instance" "win-rdp-console2" {
   ami                         = data.aws_ami.w19.id
@@ -561,6 +561,41 @@ resource "aws_instance" "win-rdp-console2" {
 
 }
 
+######################RDP Windows - Client02####################################################################
+
+data "template_file" "win-rdp-console3" {
+    template = file("win-rdp-console3")
+    vars = {
+      win_rdp_password = "${random_string.password.result}"
+      guac_auth_password = "${random_string.version.result}"
+    }
+}
+##### Windows 2019 RDP ################################################################################################
+#creating EC2 instance resource Client02
+resource "aws_instance" "win-rdp-console3" {
+  ami                         = data.aws_ami.w19.id
+  associate_public_ip_address = true
+  disable_api_termination     = false
+  ebs_optimized               = false
+  get_password_data           = true
+  hibernation                 = false
+  instance_type               = "t2.medium"
+  ipv6_address_count          = 0
+  ipv6_addresses              = []
+  private_ip                  = "172.31.24.15"
+  monitoring                  = false
+  subnet_id                   = aws_subnet.subnet_consoles.id #subnet is allowed rdp inbound and to access other devices.
+  key_name                    = aws_key_pair.terrakey.key_name
+  vpc_security_group_ids      = [aws_security_group.rdp_console.id]
+  user_data                   = data.template_file.win-rdp-console3.rendered
+  #iam_instance_profile = aws_iam_instance_profile.ssm_profile.name
+  tags = {
+    Name = "win-rdp-console"
+  }
+
+  timeouts {}
+
+}
 
 ###########################################################################################################################
 

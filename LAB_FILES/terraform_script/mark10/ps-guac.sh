@@ -97,6 +97,16 @@ echo "<param name=\"security\">nla</param>" >> /home/ubuntu/user-mapping.xml
 echo "<param name=\"ignore-cert\">true</param>" >> /home/ubuntu/user-mapping.xml
 echo "</connection>" >> /home/ubuntu/user-mapping.xml
 
+#### RDP CONSOLE #2 ################
+echo "<connection name=\"Client02\">" >> /home/ubuntu/user-mapping.xml
+echo "<protocol>rdp</protocol>" >> /home/ubuntu/user-mapping.xml
+echo "<param name=\"hostname\">${win_rdp_internal_ip}</param>" >> /home/ubuntu/user-mapping.xml
+echo "<param name=\"username\">Administrator</param>" >> /home/ubuntu/user-mapping.xml
+echo "<param name=\"password\">${win_rdp_password}</param>" >> /home/ubuntu/user-mapping.xml
+echo "<param name=\"security\">nla</param>" >> /home/ubuntu/user-mapping.xml
+echo "<param name=\"ignore-cert\">true</param>" >> /home/ubuntu/user-mapping.xml
+echo "</connection>" >> /home/ubuntu/user-mapping.xml
+
 #### XRDP Linux Mate #1 ###############
 echo "<connection name=\"DC01\">" >> /home/ubuntu/user-mapping.xml
 echo "<protocol>rdp</protocol>" >> /home/ubuntu/user-mapping.xml

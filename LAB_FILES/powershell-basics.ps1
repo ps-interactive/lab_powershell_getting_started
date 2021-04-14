@@ -66,7 +66,29 @@ Note: The -group parameter is only available in PowerShell 7 so it will not work
 
 # Congratulations! You've completed your first exploration of the PowerShell console using get-verb. Get-verb is a great tool for finding the verbs used by PowerShell, and it will help you as you explore more commands available in PowerShell.
 
+# Setup
 
+# Add Client01 to Domain
+# Steps
+# 1) Open Windows PowerShell as administrator
+# Run the following command:
+add-computer -domain company.co -server dc01.company.co -restart -force
+# When prompted, enter username of Administrator and password from the "file"
+
+# Demo: Exploring PowerShell Verbs
+#Demo-M2-01
+get-verb | more
+
+get-verb -Verb Set | more
+
+get-verb -Verb Set | format-list
+
+Get-Verb -Group Security | Format-List
+
+# Broken
+start https://aka.ms/psverbs
+
+# Try https://bit.ly/psverbs
 
 #Demo: Working with Aliases and Parameters
 # In this lab, you'll get experience using aliases and positional parameters in PowerShell. 
@@ -94,17 +116,25 @@ gsv M* -Comp Client1,Dc01
 #Runa as Standard
 get-help                           
 help                  
-help *Service* | more                        
+get-help *Service* | more                        
 help get-service            
+
 #Elevate to Admin
+# In labs, already updated
 start-process PowerShell -RunAs -Credential (Get-Credential)
 update-help
+
+# Using Help w/ different parameters 
 help get-service
-Man get-service
 help get-service -Examples
 help get-service -full
-help get-service -online  
+help get-service -online 
+
+Man get-service 
 Help *about*
+
+# help about_eventlogs
+
 #Add a command showing about file
 
 
@@ -114,9 +144,10 @@ Help *about*
 #Demo 3 - Get Commands
 Help get-command 
 Help Get-Command -examples
-get-command
+get-command | more
+Ctrl + C
 get-command -verb New
-get-command -CommandType Function 
+get-command -CommandType Function | measure-object
 #You are looking for a command to work with IP Address Configurations on a Windows System
 get-command -name *IP* | More
 get-command -Name *IP* -Module Net*
@@ -124,20 +155,6 @@ Get-command -Name *IP* -Module NetTCPIP
 Help Get-NetIPAddress 
 Help Get-NetIPAddress -Examples
 Get-NetIPAddress
-GIP
-get-command -Name *Fire*
-get-command -Name get-*Fire*
-get-command -Name get-NetFire*
-help Get-NetFirewallRule
-Get-NetFirewallRule | gm
-Get-NetFirewallRule
-Get-NetFirewallRule -Name *Remote* 
-Get-NetFirewallRule -Name *RemoteDesktop* 
-Get-NetFirewallRule -Name *RemoteDesktop* | FT
-Get-NetFirewallRule -Name *RemoteDesktop* | Set-NetFirewallRule -Enabled 'True' -Whatif
-Get-NetFirewallRule -Name *RemoteDesktop* | FT
-
-
 
 
 ## Demo: Documenting Your Work in the PowerShell Console
@@ -152,43 +169,55 @@ cd c:\scripts
 #working with get-history
 Help get-history
 Get-history
-#invoke-history -id 24
+#For this command choose an id number from your history 
+invoke-history -id 24
 
 # Sending get-history output to a text file and viewing in notepad and vscode
 Get-History | Out-File c:\scripts\transcripts\history.txt
 notepad .\transcripts\history.txt
-Code c:\scripts\transcripts\history.txt
+
+#Code c:\scripts\transcripts\history.txt
 
 Clear-History
 Get-History
 
 # Working with start-transcript
 Help Start-Transcript
-cls
-Start-Transcript -path .\transcripts\transcript1.txt
+Start-Transcript -path .\transcripts\transcript1.txt -Append
 Get-service | Where-Object -Property Status -EQ Stopped
 Stop-transcript
 code .\Transcripts\transcript1.txt
-help Start-Transcript
-Start-Transcript -path .\transcripts\Transcript1.txt -append
-Get-service | Where-Object -Property Status -eq Running
-Stop-transcript
 Notepad .\Transcripts\transcript1.txt
-
 
 # Demo: Finding Object Properties with Get-Member
 
 #Demo 5 - Pipelining and Objects
 # Need DNS Name Resolution
 Open Windows PowerShell from the Start Menu using Run As Administrator
+
 Help Get-Member
-Get-service -computername client01 | Get-Member
+Get-service | Get-Member
 #Add -computername to commands ?
 Get-service | Select-Object Name,MachineName,Status
 Get-Service | Select-Object Name,MachineName,Status | Get-Member
 Get-Service | Where-Object status -eq "Stopped" | More
-::
+
 Get-Service -ComputerName Client01,DC01 |
-Where-Object status -eq "Stopped" |
-Select-Object Name,MachineName,Status |
-Sort-Object -Property MachineName | More
+>> Where-Object status -eq "Stopped" |
+>> Select-Object Name,MachineName,Status |
+>> Sort-Object -Property MachineName | More
+
+
+# Not sure where this is from - Not in Module 3
+get-command -Name *Fire*
+get-command -Name get-*Fire*
+get-command -Name get-NetFire*
+help Get-NetFirewallRule
+Get-NetFirewallRule | gm
+Get-NetFirewallRule
+Get-NetFirewallRule -Name *Remote* 
+Get-NetFirewallRule -Name *RemoteDesktop* 
+Get-NetFirewallRule -Name *RemoteDesktop* | FT
+Get-NetFirewallRule -Name *RemoteDesktop* | Set-NetFirewallRule -Enabled 'True' -Whatif
+Get-NetFirewallRule -Name *RemoteDesktop* | FT
+

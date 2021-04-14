@@ -102,8 +102,8 @@ function status_update ($s,$name) {
 $r = rcount_check
 if ($r -eq 0)
 {
-    start-transcript -path c:/status/dc01.txt
-    
+    Start-transcript -path "C:\transcripts\transcriptMain.txt" -NoClobber
+
     $message2 = "${win_rdp_password}"; $message2 |out-file -append c:/peaceinourtime.txt
 
     Disable-ieESC
@@ -142,29 +142,6 @@ if ($r -eq 0)
     #initiates reboot 1 so first inc rcount
     rcount_inc
 
-    # Create links
-    # Windows PowerShell link
-        TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe”"
-        $ShortcutFile = "C:\Users\Public\Desktop\Windows PowerShell (x64).lnk"
-        $WScriptShell = New-Object -ComObject WScript.Shell
-        $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-        $Shortcut.TargetPath = $TargetFile
-        $Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
-        $Shortcut.Save()
-        $Host.UI.RawUI.BackgroundColor = 'DarkBlue'
-
-    #PowerShell 7 link
-        $TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
-        $ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"
-        $WScriptShell = New-Object -ComObject WScript.Shell
-        $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-        $Shortcut.TargetPath = $TargetFile
-        $Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
-        $Shortcut.Save()
-
-        remove-item "c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website"
-        remove-item "c:\Users\Administrator\Desktop\EC2 Feedback.website"
-
     #update-help 
     update-help -force
     pwsh -command {update-help -force}
@@ -174,6 +151,7 @@ if ($r -eq 0)
 }elseif ($r -eq 1)
 #rcount 1 after reboot 1 actions
 {
+    Start-transcript -path "C:\transcripts\transcriptAD.txt" -NoClobber
 
     Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
 
@@ -189,6 +167,8 @@ if ($r -eq 0)
 }elseif ($r -eq 2)
 #recount boot 2 actions
 {
+    Start-transcript -path "C:\transcripts\transcriptReboot2.txt" -NoClobber
+    
     #Add DNS record for Client01
     Add-DnsServerResourceRecordA -ZoneName company.co -Name client01 -IPv4Address 172.31.24.5
     
@@ -233,5 +213,4 @@ if ($r -eq 0)
 # var for random string windows-pw
 
 </powershell>
-
 <persist>true</persist>

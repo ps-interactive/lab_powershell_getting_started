@@ -116,7 +116,10 @@ status_update 0 "client01"
 
 Disable-ieESC
 
-Start=transcript -path "C:\transcripts\transcriptMain.txt" -NoClobber
+# Create Transcript
+Start-transcript -path "C:\transcripts\transcriptMain.txt" -NoClobber
+
+# Open Firewall
 New-NetFirewallRule -DisplayName "Allow Inbound From DC" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow
 
 #chocolate install
@@ -137,9 +140,6 @@ $env:chocolateyProxyUser='tstark'
     choco install vscode -y --proxy="172.31.245.222:8888" --proxy-user="tstark" --proxy-password="pssecrocks"
     choco install vscode-powershell -y --proxy="172.31.245.222:8888" --proxy-user="tstark" --proxy-password="pssecrocks"
 
-#Add vscode extension
-code --install-extension ms-vscode.powershell
-
 #update-help in PowerShell
 update-help -force
 pwsh -command {update-help -force}
@@ -147,53 +147,47 @@ pwsh -command {update-help -force}
 # Add RSAT
 Get-WindowsFeature -Name *RSAT* | Install-windowsfeature
 
-#Download LAB_Files
+# Create LAB_FILES directory
 $gitlist = “-c http.proxy=http://tstark:pssecrocks@172.31.245.222:8888 clone https://github.com/ps-interactive/lab_powershell_getting_started.git c:\Users\Administrator\Desktop\lab_powershell_getting_started”
 start-process  -filepath ‘C:\Program Files\git\bin\git.exe’ -argumentlist $gitlist -wait
 copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_powershell_getting_started\LAB_FILES\’ -destination ‘c:\Users\Administrator\Desktop\’
 remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_getting_started
 remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
 remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
+
 # Create links
 # Windows PowerShell link
-TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe”"
-$ShortcutFile = "C:\Users\Public\Desktop\Windows PowerShell (x64).lnk"
-$WScriptShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-$Shortcut.TargetPath = $TargetFile
-$Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
-$Shortcut.Save()
-$Host.UI.RawUI.BackgroundColor = 'DarkBlue'
+    $TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
+    $ShortcutFile = "C:\Users\Public\Desktop\Windows PowerShell (x64).lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $TargetFile
+    $Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
+    $Shortcut.Save()
+    #$Host.UI.RawUI.BackgroundColor = 'DarkBlue'
 
-PowerShell 7 link
-$TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
-$ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"
-$WScriptShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
-$Shortcut.TargetPath = $TargetFile
-$Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
-$Shortcut.Save()
+# PowerShell 7 link
+    $TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
+    $ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $TargetFile
+    $Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
+    $Shortcut.Save()
 
-remove-item "c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website"
-remove-item "c:\Users\Administrator\Desktop\EC2 Feedback.website"
-
+# Network Config
 $ifindex = get-netipinterface -addressfamily IPv4 -interfaceAlias Ethernet
 $ifindex = $ifindex.ifindex
 set-dnsclientserveraddress -interfaceindex $ifindex -serverAddresses ("172.31.24.10","172.31.24.1")
 Set-DnsClient -InterfaceIndex $ifindex -ConnectionSpecificSuffix "company.co"
 Set-DnsClientGlobalSetting -SuffixSearchList @("company.co", "us-west-2.ec2-utilities.amazonaws.com")
-rename-computer -NewName client01 -verbose | out-file "c:\computer-add.txt" -append
-Stop-transcript
 
+# Rename computer and reboot
 rcount_inc
 
-Restart-Computer -force
-
-}
-                                                                              
-elseif($r -eq 1){
-    Start-transcript -path "C:\transcripts\transcriptDCJoin.txt" -NoClobber
-      #check for DC01 rcount 3
+rename-computer -NewName client01 -restart -verbose | out-file "c:\computer-add.txt" -append
+    
+start-sleep -s 120
     $dc_status=0
     $t=0
     status_check dc01
@@ -203,20 +197,29 @@ elseif($r -eq 1){
         $t++
         $t |out-file c:\time
         $dc_status | out-file "c:\status-check"
-        start-sleep -s 60
+        Start-sleep -s 30
         }
         # removed status check code
         # replace with start-sleep
-  
-    add-computer -domain company.co -server DC01 -credential $credential -force -verbose | out-file "c:\computer-add" -append
+        # start-sleep -s 300
+
     rcount_inc
-    Stop-transcript
-    restart-computer
+    #add-computer -newname Client01 -domain company.co -server dc01.company.co -restart -force -localcredential $local_credential -credential company\psadmin -password
+    #$domain = "company.co"
+    #$password = "P@ssW0rD!"
+    #$username = "company\psadmin"
+    #$credential = new-object -TypeName System.Management.Automation.PSCredential -ArgumentList $username,$password
+    add-computer -domain company.co -server dc01.company.co -restart -force -credential $local_credential | out-file "c:\computer-add" -append
+}
+
+elseif($r -eq 1){
+      #check for DC01 rcount 3
+   $message4 = "happy huntingv1"; $message4 |out-file 'c:\peaceinourtime' -append
+
     }
 
 elseif($r -eq 2){
     $message4 = "happy hunting"; $message4 |out-file 'c:\peaceinourtime' -append
 }
 </powershell>
-
 <persist>true</persist>

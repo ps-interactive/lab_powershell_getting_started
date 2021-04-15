@@ -4,6 +4,14 @@
 #Demo: Requirements for Remoting on Windows PowerShell
 get-service -computername Client01
 
+# Log into Client02 and run steps from Video that are similar to this:
+
+# If error, run this on Client01 and Client02
+# Using wildcard trusts everyone. This should be used only in test environments and never permanently.
+# Enter yes when prompted
+set-item WSMan:\localhost\client\TrustedHosts -Value *
+
+#This will work in Lab environment
 
 #m4-02
 #Variables in current console
@@ -53,6 +61,10 @@ Get-PSSession
 #Running command on Remote System
 help Invoke-command
 $ComputerName = "Client02"
+
+# For username and password use:
+# Username: Administrator
+# Password is located in file c:/peace...
 $credential = Get-Credential
 
 Invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $ComputerName }

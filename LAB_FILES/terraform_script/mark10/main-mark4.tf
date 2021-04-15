@@ -726,7 +726,7 @@ resource "local_file" "pki-1-ssh" {
 }
 */
 
-############################################## win rdp outputs and files#################################################################################
+############################################## Client01 - win rdp outputs and files#################################################################################
 ################################################################################################################################
 #instance id
 output "rdp_instance_id" {
@@ -927,6 +927,106 @@ resource "local_file" "win-rdp-console-2-cert" {
 }
 ##############EOL WIN2
 
+############################################## Client 02 - win rdp outputs and files#################################################################################
+################################################################################################################################
+#instance id
+output "rdp_instance_id3" {
+  value       = aws_instance.win-rdp-console.id
+}
+
+#box name
+output "win-rdp-3-name" {
+  value       = "Windows 2019 #1"
+}
+#file
+resource "local_file" "win-rdp-console-3-name" {
+  content       = "Windows 2019 #1"
+  filename    = "connections/4-win-rdp-console3/name"
+}
+
+#box protocol
+#box name
+output "win-rdp-3-protocol" {
+  value       = "rdp"
+}
+#file
+resource "local_file" "win-rdp-console-3-protocol" {
+  content       = "rdp"
+  filename    = "connections/4-win-rdp-console3/protocol"
+}
+
+#DNS
+output "win-rdp-console-3-dns" {
+  value       = aws_instance.win-rdp-console.public_dns
+  description = "Public DNS for the #3 WIN RDP console"
+}
+#file
+resource "local_file" "win-rdp-console-3-dns" {
+    content     = aws_instance.win-rdp-console3.public_dns
+    filename = "connections/4-win-rdp-console3/hostname"
+    #file_permission = "0600"
+}
+
+#extip
+output "win-rdp-console-3-extip" {
+  value       = aws_instance.win-rdp-console3.public_ip
+  description = "connections/#3 Windows RPD public IP"
+}
+#file
+resource "local_file" "win-rdp-console-3-extip" {
+    content     = aws_instance.win-rdp-console3.public_ip
+    filename = "connections/4-win-rdp-console3/extip"
+    #file_permission = "0600"
+}
+#extip
+output "win-rdp-console-3-port" {
+  value       = "3389"
+  description = "Port of #3 win RDP Console"
+}
+#file
+resource "local_file" "win-rdp-console-3-port" {
+    content     = "3389"
+    filename = "connections/4-win-rdp-console3/port"
+    #file_permission = "0600"
+}
+#Username
+output "win-rdp-console-3-un" {
+  value       = "administrator"
+  description = "Windows UN are Administrator."
+}
+#file
+resource "local_file" "win-rdp-console-3-un" {
+    content     = "administrator"
+    filename = "connections/4-win-rdp-console3/username"
+    #file_permission = "0600"
+}
+
+#Password for WIN
+output "win-rdp-console-3-pw" {
+  value       = random_string.password.result
+  description = "Password for the windows devices."
+}
+#file
+resource "local_file" "win-rdp-console-3-pw" {
+    content     = random_string.password.result
+    filename = "connections/4-win-rdp-console3/password"
+    #file_permission = "0600"
+}
+#nla security param
+resource "local_file" "win-rdp-console-3-nla" {
+    content     = "nla"
+    filename = "connections/4-win-rdp-console3/security"
+    #file_permission = "0600"
+}
+# ignor-cert
+resource "local_file" "win-rdp-console-3-cert" {
+    content     = "true"
+    filename = "connections/4-win-rdp-console3/ignore-cert"
+    #file_permission = "0600"
+}
+
+
+#####################EOL WIN 3 - Client02
 ################################################### Dump file or information #######################################
 
 #guac auth username

@@ -143,6 +143,33 @@ if ($r -eq 0)
     #enable session proxy for objects that require [system.net.webrequest] and no proxy options
     #initiates reboot 1 so first inc rcount
     rcount_inc
+    
+    $gitlist = “-c http.proxy=http://tstark:pssecrocks@172.31.245.222:8888 clone https://github.com/ps-interactive/lab_powershell_getting_started.git c:\Users\Administrator\Desktop\lab_powershell_getting_started”
+start-process  -filepath ‘C:\Program Files\git\bin\git.exe’ -argumentlist $gitlist -wait
+copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_powershell_getting_started\LAB_FILES\’ -destination ‘c:\Users\Administrator\Desktop\’
+remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_getting_started
+remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
+remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
+expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath "c:\demos"
+# Create links
+# Windows PowerShell link
+    $TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
+    $ShortcutFile = "C:\Users\Public\Desktop\Windows PowerShell (x64).lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $TargetFile
+    $Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
+    $Shortcut.Save()
+    #$Host.UI.RawUI.BackgroundColor = 'DarkBlue'
+
+# PowerShell 7 link
+    $TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
+    $ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $TargetFile
+    $Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
+    $Shortcut.Save()
 
     #update-help 
     update-help -force
@@ -173,7 +200,7 @@ if ($r -eq 0)
     
     #Add DNS record for Client01
     Add-DnsServerResourceRecordA -ZoneName company.co -Name client01 -IPv4Address 172.31.24.5
-    
+    Add-DnsServerResourceRecordA -ZoneName company.co -Name client02 -IPv4Address 172.31.24.15
     #pop a file over the c$ so the client knows it can join the domain now :) #may need to write a test connection in here to make sure it isn't missing.
     #can import from list in github once that is setup! I have code lying around for that somewhere :) Oh and this way we could create a whole commond AD dataset! YAAAS lets do that.
     #$pass = "${win_rdp_password}"

@@ -139,18 +139,19 @@ if ($r -eq 0)
     key_pull
     key_set
     status_update 0 dc01
+
     ###Setup stuff we want to run like settingup add or any of that
     #enable session proxy for objects that require [system.net.webrequest] and no proxy options
     #initiates reboot 1 so first inc rcount
     rcount_inc
     
     $gitlist = “-c http.proxy=http://tstark:pssecrocks@172.31.245.222:8888 clone https://github.com/ps-interactive/lab_powershell_getting_started.git c:\Users\Administrator\Desktop\lab_powershell_getting_started”
-start-process  -filepath ‘C:\Program Files\git\bin\git.exe’ -argumentlist $gitlist -wait
-copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_powershell_getting_started\LAB_FILES\’ -destination ‘c:\Users\Administrator\Desktop\’
-remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_getting_started
-remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
-remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
-expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath "c:\demos"
+    start-process  -filepath ‘C:\Program Files\git\bin\git.exe’ -argumentlist $gitlist -wait
+    copy-item -recurse ‘c:\Users\Administrator\Desktop\lab_powershell_getting_started\LAB_FILES\’ -destination ‘c:\Users\Administrator\Desktop\’
+    remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_getting_started
+    remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
+    remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
+    expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath "c:\demos"
 # Create links
 # Windows PowerShell link
     $TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
@@ -171,6 +172,15 @@ expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddire
     $Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
     $Shortcut.Save()
 
+# Command Prompt link
+    $TargetFile = "%windir%\system32\cmd.exe"
+    $ShortcutFile = "C:\Users\Public\Desktop\Command Prompt.lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $TargetFile
+    $Shortcut.IconLocation = "%windir%\system32\cmd.exe"
+    $Shortcut.Save()
+    
     #update-help 
     update-help -force
     pwsh -command {update-help -force}

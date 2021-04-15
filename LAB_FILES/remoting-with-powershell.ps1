@@ -36,7 +36,11 @@ $credential
 
 Get-Variable -Name c*
 
-#nter-PSSession -ComputerName $ComputerName -Credential cred
+# For Enter-PSSession to work need to resolve issues:
+# with DNS
+# with Service Control Manager > Choose another command besides get-service, perhaps get-process
+
+#Enter-PSSession -ComputerName $ComputerName -Credential cred
 
 Get-Service -ComputerName $computername
 

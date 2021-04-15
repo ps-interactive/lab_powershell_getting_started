@@ -173,6 +173,15 @@ expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddire
     $Shortcut.IconLocation = "C:\Program Files\PowerShell\7\pwsh.exe"
     $Shortcut.Save()
 
+# Command Prompt link
+    $TargetFile = "%windir%\system32\cmd.exe"
+    $ShortcutFile = "C:\Users\Public\Desktop\Command Prompt.lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $TargetFile
+    $Shortcut.IconLocation = "%windir%\system32\cmd.exe"
+    $Shortcut.Save()
+    
 # Network Config
 $ifindex = get-netipinterface -addressfamily IPv4 -interfaceAlias Ethernet
 $ifindex = $ifindex.ifindex

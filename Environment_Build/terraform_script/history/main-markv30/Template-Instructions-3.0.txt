@@ -1,0 +1,11 @@
+Template Edit Workflow
+
+1. Add or remove USEREC2 Instnaces as required - line 516
+2. Change names in connection variabls under each ec2 instance as desired
+3. Add or remove template variables for ps-guac if stil in alpha testing (note required once in beta) line line 465
+4. Modify .sh scripts assigned to each Ec2 Instance as required may need to make more, change names, and change tempaltes in each ec2 instance to match.
+5. Modify connections for each user console in ps-guac.sh if still in alpha testing (not required once in beta)
+6. Modify windows or linux installations as required, follow notes and insstruction in each user data template for guidance.
+7. zip up file and drop in ps author home opportunity (if you are testing on your own put your tokens in the desginated area at the top of the tf file and run ./terrafor plan and subsequently ./terraform apply against you own environment)
+8. If in alpha testing waitfor url to dispence in terraform output, takes max 10 minutes for guac to be properly accessable. If not in alpha the button for the environment will be available within 3 minutes or less.
+9. If you need to edit the networking be careful and notify PS staff to ensure it is done correctly. A standard requirement would be to allow connections between devices. This is done in the respective subnets for each console.  You may want to restrict conenctions between subnets, this is also doable.

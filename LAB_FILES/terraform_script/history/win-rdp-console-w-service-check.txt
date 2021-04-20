@@ -111,7 +111,7 @@ if ($r -eq 0)
 {
 cred_init
 key_pull
-status_update 0 "client01"
+status_update 0 "dc01"
 
 Disable-ieESC
 
@@ -141,7 +141,7 @@ $env:chocolateyProxyUser='tstark'
 
 #update-help in PowerShell
 update-help -force
-pwsh -command {update-help -force}
+# pwsh -command {update-help -force}
 
 # Add RSAT
 Get-WindowsFeature -Name *RSAT* | Install-windowsfeature
@@ -192,16 +192,45 @@ Set-DnsClientGlobalSetting -SuffixSearchList @("company.co", "us-west-2.ec2-util
 
 # Rename computer and reboot
 rcount_inc
-
+write-host "Rcount is set to $R"
 set-item WSMan:\localhost\Client\TrustedHosts -Value * -Force -verbose
-rename-computer -NewName client01-verbose | out-file "c:\computer-add.txt" -append
+rename-computer -NewName client01 -verbose
+
+
 restart-computer -force
 
 }
 
 elseif($r -eq 1){
-      #check for DC01 rcount 3
-   $message4 = "happy huntingv1"; $message4 |out-file 'c:\peaceinourtime' -append
+    #check for DC01 rcount 3
+    Start-transcript -path "C:\transcripts\transcriptDCJoin.txt" -NoClobber
+    #check for DC01 rcount 3
+    write-host "Rcount is set to $R"
+    status_update 1 "dc01"
+    #$dc_status=0
+    # Domain Join
+set-item WSMan:\localhost\Client\TrustedHosts -Value * -Force -verbose
+$dcstatus = get-service -ComputerName DC01 -Name Netlogon -ErrorAction SilentlyContinue -Verbose | select-object -Property status -Verbose
+$Prop = $dcstatus.status
+$prop
+#$status = $Prop.Value
+#$status
+        do {
+            #start-sleep -s 60
+            write-host "DC status is offline" -Verbose
+            $dcstatus = get-service -ComputerName DC01 -Name Netlogon -ErrorAction SilentlyContinue -Verbose | select-object -Property status -Verbose
+            $Prop = $dcstatus.status
+            start-sleep -s 5
+            #$prop
+            #$status = $Prop.Value
+            #$status
+            
+        } while ($prop -ne 'Running') 
+
+write-host "Congrats! DC status is $status"
+rcount_inc
+Write-host "adding client01 to domain"
+add-computer -domain company.co -server DC01 -credential $Local_credential -newname Client01 -force -verbose -restart
 
     }
 

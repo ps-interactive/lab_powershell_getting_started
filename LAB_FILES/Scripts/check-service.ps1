@@ -18,5 +18,5 @@ write-host $prop
         } while ($prop -ne 'Running') 
 
 write-host "Congrats! DC status is $status"
-add-computer -domain company.co -server DC01 -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt") -newname Client01 -force -verbose | out-file "c:\computer-add.txt" -append
+add-computer -domain company.co -server DC01 -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart | out-file "c:\logging.txt" -append
 restart-computer -Force

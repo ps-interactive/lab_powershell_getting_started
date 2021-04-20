@@ -110,7 +110,7 @@ if ($r -eq 0)
 {
 cred_init
 key_pull
-status_update 0 "client02"
+status_update 0 "dc01"
 
 Disable-ieESC
 
@@ -191,16 +191,36 @@ Set-DnsClientGlobalSetting -SuffixSearchList @("company.co", "us-west-2.ec2-util
 
 # Rename computer and reboot
 rcount_inc
-
+write-host "Rcount is set to $R"
 set-item WSMan:\localhost\Client\TrustedHosts -Value * -Force -verbose
-rename-computer -NewName client01 -verbose | out-file "c:\computer-add.txt" -append
+rename-computer -NewName client01 -verbose 
 restart-computer -force
 
 }
 
 elseif($r -eq 1){
-      #check for DC01 rcount 3
-   $message4 = "happy huntingv1"; $message4 |out-file 'c:\peaceinourtime' -append
+    #check for DC01 rcount 3
+    Start-transcript -path "C:\transcripts\transcriptDCJoin.txt" -NoClobber
+    #check for DC01 rcount 3
+    write-host "Rcount is set to $R"
+    status_update 1 "dc01"
+    #$dc_status=0
+    $t=0
+    status_check dc01
+    while ($r -ne 1){
+        $name = "dc01"
+        $dc_status = get-content "c:\dc01-status"
+        $t++
+        $t |out-file c:\time
+        $dc_status | out-file "c:\status-check"
+        start-sleep -s 5
+        }
+        # removed status check code
+        # replace with start-sleep
+    Write-host "Adding computer to domain..."
+    add-computer -domain company.co -server DC01 -credential $local_credential -force -verbose
+    rcount_inc
+    restart-computer -force
 
     }
 

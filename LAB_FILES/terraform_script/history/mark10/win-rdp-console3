@@ -199,7 +199,6 @@ restart-computer -force
 
 elseif($r -eq 1){
     $message4 = "Complete!"; $message4 |out-file 'c:\logging.txt' -append
-    restart-computer -force | out-file 'c:\logging' -append
     }
 
 else {

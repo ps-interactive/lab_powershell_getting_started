@@ -192,19 +192,18 @@ Set-DnsClientGlobalSetting -SuffixSearchList @("company.co", "us-west-2.ec2-util
 rcount_inc
 
 set-item WSMan:\localhost\Client\TrustedHosts -Value * -Force -verbose
-rename-computer -NewName client01 -verbose | out-file "c:\logging.txt" -append
+rename-computer -NewName client02 -verbose | out-file "c:\logging.txt" -append
 restart-computer -force
 
 }
 
 elseif($r -eq 1){
-      #check for DC01 rcount 3
-   $message4 = "happy huntingv1"; $message4 |out-file 'c:\logging.txt' -append
-
+    $message4 = "Complete!"; $message4 |out-file 'c:\logging.txt' -append
+    restart-computer -force | out-file 'c:\logging' -append
     }
 
-elseif($r -eq 2){
-    $message4 = "happy hunting"; $message4 |out-file 'c:\logging.txt' -append
+else {
+    Exit
 }
 </powershell>
 <persist>true</persist>

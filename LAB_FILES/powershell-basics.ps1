@@ -13,8 +13,14 @@
 
 # Introduction to PowerShell
 # Demo: Using PowerShell to Report on Stopped Server Services
-# Run these commands in Windows PowerShell
-get-service                                                                                                                           
+
+#Open Windows PowerShell
+# Right-click on choose 'Run as administrator' on desktop icon
+
+# Run these commands in Windows PowerShell console
+
+# View all services on local system                                                                                                                         
+Get-Service
 
 # View stopped services
 get-service | where-Object Status -eq 'Stopped'

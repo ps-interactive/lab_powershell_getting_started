@@ -199,13 +199,12 @@ restart-computer -force
 }
 
 elseif($r -eq 1){
-      #check for DC01 rcount 3
-   $message4 = "happy huntingv1"; $message4 |out-file 'c:\logging' -append
-
+    $message4 = "Complete!"; $message4 |out-file 'c:\logging.txt' -append
+    restart-computer -force | out-file 'c:\logging' -append
     }
 
-elseif($r -eq 2){
-    $message4 = "happy hunting"; $message4 |out-file 'c:\logging' -append
+else {
+    Exit
 }
 </powershell>
 <persist>true</persist>

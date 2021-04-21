@@ -63,6 +63,7 @@ New-SMBmapping -localPath w: -remotepath \\DC01\Share
 Get-smbmapping
 cd w:\
 dir
+    #In the lab environment, the directory listing will have a different set of files and directories than the video demo
 
 # Demo: Reviewing Event Log Information
 # Run in Windows PowerShell console

@@ -4,6 +4,8 @@
 # Note: Some demo commands have been modified to work within the lab environment. They will perform the same general tasks, but may have different references such as file directories. Also, any tasks requiring internet access will be skipped.
 # Note: Use of cls in code is to clear-host or clear the screen during demos. This can be skipped during your labs if desired.
 
+#IMPORTANT: Prior to beginning this lab, make sure you have completed the setup tasks in ./setup-lab.ps1!!
+
 # Demo: 
 # Run these commands in Windows PowerShell
 # In this Lab, you will learn how to use various commands in PowerShell to explore the console, and find the information you are looking for. PowerShell's command line interface is built to provide you the information you need through exploration and use of the commands in the console. Using this exploratory approach will deepen your understanding of how PowerShell works and allow you to find answers without always searching on the web for them.
@@ -43,45 +45,42 @@ $data | export-csv .\Services2.csv
 get-content .\services2.csv | more  
 
 # demo: Exploring PowerShell Verbs
-In this first challenge, you will explore get-verb from the PowerShell console. PowerShell uses a Verb-Noun syntax so it's important that you learn the common verbs in PowerShell like get and set. 
-Remember in PowerShell: Almost everything you need to know, you can find out through the shell. Just type and Explore.
-Note: In this challenge, you will be using PowerShell 7, not Windows PowerShell.
-You will start by accessing Client01 through <x>. On the desktop of client01, open the Labs folder and open lab-challenge-02.ps1 in Visual Studio Code.
-Starting in Client01, click on the Window icon in the lower left corner and type PowerShell to display PowerShell 7 (x64) in the start menu.
-Right-click the PowerShell 7 (x64) icon and choose More > Run as administrator to launch the Windows PowerShell Console.
-Right-click the menu bar of the the console window and choose Properties to configure the PowerShell console window.
-This will allow you to change many aspects of the console to enhance your experience. Changes made to the console will rename part of your user profile.
-In the Windows PowerShell Properties window, click the Font tab, choose a larger font of 28, and click OK to apply the changes.
-In the console window, type the following command to list all of the verbs available in the Windows PowerShell console, and click the space bar to scroll through each screen
+#In this first challenge, you will explore get-verb from the PowerShell console. PowerShell uses a Verb-Noun syntax so it's important that you learn the common verbs in PowerShell like get and set. 
+#Remember in PowerShell: Almost everything you need to know, you can find out through the shell. Just type and Explore.
+
+#In the console window, type the following command to list all of the verbs available in the Windows PowerShell console, and click the space bar to scroll through each screen
 get-verb | more
-The command includes | more so all of the output can be reviewed one screen at a time. If you need to exit the output, you can use Ctrl+C to go to the prompt.
+    #The command includes | more so all of the output can be reviewed one screen at a time. If you need to exit the output, you can use Ctrl+C to go to the prompt.
 
 #Type the following command to view all of the commands in PowerShell using the Set verb.
 get-verb -Verb Set | more
-In the command output, you will see the default formatting of output is as a table.
+    #In the command output, you will see the default formatting of output is as a table.
 
 #Type the following command to view all of the commands in PowerShell using the set verb and in a list format.
 get-verb -Verb Set | format-list
-In this command, you pipe "|" the output of the command into format-list to display the output as a list. 
+    #In this command, you pipe "|" the output of the command into format-list to display the output as a list. 
 
 #Type the following command to view all of the verbs that are part of the Security group.
 Get-Verb -Group Security | Format-List
-Note: The -group parameter is only available in PowerShell 7 so it will not work if you are using Windows PowerShell.
+ #Note: The -group parameter is only available in PowerShell 7 so it will not work if you are using Windows PowerShell.
 
 #Type Exit to close the PowerShell 7 console, or leave it open if you plan to do the next challenge.
-
-# Congratulations! You've completed your first exploration of the PowerShell console using get-verb. Get-verb is a great tool for finding the verbs used by PowerShell, and it will help you as you explore more commands available in PowerShell.
+Exit
 
 # Setup
-
 # Add Client01 to Domain
-# Steps
-# 1) Open Windows PowerShell as administrator
-# Run the following command:
-add-computer -domain company.co -server dc01.company.co -restart -force
-# When prompted, enter username of Administrator and password from the "file"
+    # Steps
+    # 1) Open Windows PowerShell as administrator
+    # Run the following command:
+    add-computer -domain company.co -server dc01.company.co -restart -force
+        # When prompted, enter username of Administrator and password from the "file"
 
 # Add update-help in PowerShell 7 with local files
+    # Steps
+    # 1) Right-click PowerShell 7 icon on the desktop and choose 'Run as administrator'
+    # 2) Enter the following command:
+    update-help -SourcePath "c:\users\administrator\desktop\Lab_Files\pshelp"
+        #Note: there will be some errors for non-updating modules. That is normal.
 
 # Demo: Exploring PowerShell Verbs
 #Demo-M2-01
@@ -228,9 +227,3 @@ Get-NetFirewallRule -Name *RemoteDesktop*
 Get-NetFirewallRule -Name *RemoteDesktop* | FT
 Get-NetFirewallRule -Name *RemoteDesktop* | Set-NetFirewallRule -Enabled 'True' -Whatif
 Get-NetFirewallRule -Name *RemoteDesktop* | FT
-
-### Delete Before Publish ###
-
-# Create File Share on DC01
-New-Item -ItemType Directory -Name "Shared" -Path C:\demos
-New-SmbShare -Path c:\demos\shared -FullAccess "company\administrator","administrators" -ChangeAccess "everyone","users"

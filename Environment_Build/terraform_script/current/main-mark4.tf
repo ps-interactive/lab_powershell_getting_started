@@ -957,7 +957,7 @@ resource "local_file" "win-rdp-console-3-protocol" {
 
 #DNS
 output "win-rdp-console-3-dns" {
-  value       = aws_instance.win-rdp-console.public_dns
+  value       = aws_instance.win-rdp-console3.public_dns
   description = "Public DNS for the #3 WIN RDP console"
 }
 #file

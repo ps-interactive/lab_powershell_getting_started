@@ -152,6 +152,7 @@ remove-item -recurse -force c:\Users\Administrator\Desktop\lab_powershell_gettin
 remove-item “c:\Users\Administrator\Desktop\EC2 Microsoft Windows Guide.website”
 remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
 expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath "c:\demos"
+
 # Create links
 # Windows PowerShell link
     $TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
@@ -199,11 +200,7 @@ restart-computer -force
 
 elseif($r -eq 1){
     $message4 = "Complete!"; $message4 |out-file 'c:\logging.txt' -append
-    restart-computer -force | out-file 'c:\logging' -append
     }
 
-else {
-    Exit
-}
 </powershell>
 <persist>true</persist>

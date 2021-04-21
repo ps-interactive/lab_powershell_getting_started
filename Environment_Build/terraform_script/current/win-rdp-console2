@@ -204,6 +204,7 @@ if ($r -eq 0)
     
     restart-computer -force
 }elseif ($r -eq 2)
+
 #recount boot 2 actions
 {
     Start-transcript -path "C:\transcripts\transcriptReboot2.txt" -NoClobber
@@ -223,33 +224,21 @@ if ($r -eq 0)
     new-aduser N.Tesla
     $message = "iambecomedeath"; $message | out-file c:/peaceinourtime.txt -append;
     
+    # Create File Share on DC01
+    New-Item -ItemType Directory -Name "Shared" -Path C:\demos
+    New-SmbShare -Path c:\demos\shared -FullAccess "company\administrator","administrators" -ChangeAccess "everyone","users" 
+          
     rcount_inc
     
     cred_init
     
-    #$path = "c:\programdata\amazon\lab-key"
-    #icacls.exe $path /reset
-    #icacls.exe $path /inheritance:r
-    #icacls.exe $path /GRANT "COMPANY\Administrator:(R)"
-    #icacls.exe $path /remove BUILTIN\\BUILTIN
     key_set
     $env:USERNAME >> "c:\username"
 
     cred_init
     status_update 1 dc01
-    #start-process -verbose scp -ArgumentList "-oStrictHostKeyChecking=no -i C:\programdata\Amazon\lab-key  c:\dc01-status ubuntu@172.31.245.222:/home/ubuntu/dc01-status" -runas $local_credential -wait
     net user Administrator ${win_rdp_password}
 }
-
-###
-##Installing things with choco with explicit proxy test is with wireshark
-#choco install nmap -y --proxy="172.31.245.222:8888" --proxy-user="tstark" --proxy-password="pssecrocks"
-#thats it should install
-#Pulling in demo files over git requires git install
-#Domain Controller
-#$dcService = Get-WindowsFeature
-#if ($dcService = $false)
-# var for random string windows-pw
 
 </powershell>
 <persist>true</persist>

@@ -81,6 +81,8 @@ Note: The -group parameter is only available in PowerShell 7 so it will not work
 add-computer -domain company.co -server dc01.company.co -restart -force
 # When prompted, enter username of Administrator and password from the "file"
 
+# Add update-help in PowerShell 7 with local files
+
 # Demo: Exploring PowerShell Verbs
 #Demo-M2-01
 get-verb | more
@@ -227,3 +229,8 @@ Get-NetFirewallRule -Name *RemoteDesktop* | FT
 Get-NetFirewallRule -Name *RemoteDesktop* | Set-NetFirewallRule -Enabled 'True' -Whatif
 Get-NetFirewallRule -Name *RemoteDesktop* | FT
 
+### Delete Before Publish ###
+
+# Create File Share on DC01
+New-Item -ItemType Directory -Name "Shared" -Path C:\demos
+New-SmbShare -Path c:\demos\shared -FullAccess "company\administrator","administrators" -ChangeAccess "everyone","users"

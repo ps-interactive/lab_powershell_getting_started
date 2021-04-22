@@ -1,3 +1,8 @@
+# Module - PowerShell Basics
+# URL: 
+
+# USE ALT+Z to toggle Word Wrap for better text viewing in VS Code!!!
+
 # M3-01
 # Demo: Finding Your Way in PowerShell
 # Run in Windows PowerShell console

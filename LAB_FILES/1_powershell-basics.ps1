@@ -1,14 +1,21 @@
 # Module - PowerShell Basics
 # URL: 
 
+# USE ALT+Z to toggle Word Wrap for better text viewing in VS Code!!!
+
+# In this Lab, you will learn how to use various commands in PowerShell to explore the console, and find the information you are looking for. PowerShell's command line interface is built to provide you the information you need through exploration and use of the commands in the console.
+# Using this exploratory approach will deepen your understanding of how PowerShell works and allow you to find answers without always searching on the web for them.
+
+# Note: The lab environment has a single client (Client01) and a domain controller (DC01).
+# All remote actions performed with Client02 as a target the video course demos will be performed with DC01 instead.
+
 # Note: Some demo commands have been modified to work within the lab environment. They will perform the same general tasks, but may have different references such as file directories. Also, any tasks requiring internet access will be skipped.
 # Note: Use of cls in code is to clear-host or clear the screen during demos. This can be skipped during your labs if desired.
 
-#IMPORTANT: Prior to beginning this lab, make sure you have completed the setup tasks in ./setup-lab.ps1!!
+#IMPORTANT: Prior to beginning this lab, make sure you have completed the setup tasks in ./0_Start-Here-setup-lab.ps1!!
 
 # Demo: 
 # Run these commands in Windows PowerShell
-# In this Lab, you will learn how to use various commands in PowerShell to explore the console, and find the information you are looking for. PowerShell's command line interface is built to provide you the information you need through exploration and use of the commands in the console. Using this exploratory approach will deepen your understanding of how PowerShell works and allow you to find answers without always searching on the web for them.
 #In this challenge, you will walk through the demo from the beginning of the course. The demo walks you through creating a .csv report of all the stopped services on a remote server. While you may not know what the commands are doing yet, this will get you hands on with PowerShell, and get you practice typing commands into the console.
 
 #cd c:\scripts\m1
@@ -165,7 +172,6 @@ Get-NetIPAddress
 
 
 ## Demo: Documenting Your Work in the PowerShell Console
-
 #Demo 4 - Using History and Transcript
 
 # setup commands

@@ -1,4 +1,7 @@
+# Module - PowerShell Basics
+# URL: 
 
+# USE ALT+Z to toggle Word Wrap for better text viewing in VS Code!!!
 
 #m4-01
 #Demo: Requirements for Remoting on Windows PowerShell

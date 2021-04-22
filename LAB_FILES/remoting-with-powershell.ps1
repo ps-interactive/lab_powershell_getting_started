@@ -50,7 +50,8 @@ Get-Service –computername $ComputerName | select Name,Status
 
 #Using PSSession
 Gcm *-PSSession
-#Create a PSSession
+
+#Create a PowerShell session for a remote system
 $ComputerName = “Client02”
 $credential = Get-Credential
 New-PSSession -ComputerName $ComputerName -Credential $credential

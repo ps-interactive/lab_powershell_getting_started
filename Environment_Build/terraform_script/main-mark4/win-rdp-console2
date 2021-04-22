@@ -188,9 +188,9 @@ if ($r -eq 0)
     remove-item “c:\Users\Administrator\Desktop\EC2 Feedback.website”
 
     # Create Shared Directory
-    #New-Item -ItemType Directory -Name "Shared" -Path "C:\demos"
-    #New-SmbShare -Path "c:\demos\shared" -FullAccess "company\administrator","administrators" -ChangeAccess "everyone","users" -name "Shared"
-    #expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath c:\demos\shared\
+    New-Item -ItemType Directory -Name "Shared" -Path "C:\demos"
+    New-SmbShare -Path "c:\demos\shared" -FullAccess "company\administrator","administrators" -ChangeAccess "everyone","users" -name "Shared"
+    expand-archive -literalpath "c:\Users\Administrator\Desktop\LAB_FILES\shareddirectory.zip" -destinationpath c:\demos\shared\
     
     # Create links
     # Windows PowerShell link

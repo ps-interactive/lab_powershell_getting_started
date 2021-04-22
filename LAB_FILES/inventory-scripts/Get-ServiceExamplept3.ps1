@@ -1,7 +1,7 @@
 #Get-ServiceExamplept3.ps1
 
-#Region Step 3 Parmeterize Variable
-# Parameter help description
+#Region Step 3 Parameterize Variable
+# Create $computername parameter that is mandatory and allows multiple inputs
 param (
     [Parameter(Mandatory=$True)]
     [string[]]

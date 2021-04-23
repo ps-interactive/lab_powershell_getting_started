@@ -5,89 +5,89 @@
 
 #m4-01
 #Demo: Requirements for Remoting on Windows PowerShell
-get-service -computername Client01
+    get-service -computername Client01
 
-# Log into Client02 and run steps from Video that are similar to this:
+    # Log into Client02 and run steps from Video that are similar to this:
 
-# If error, run this on Client01 and Client02
-# Using wildcard trusts everyone. This should be used only in test environments and never permanently.
-# Enter yes when prompted
-set-item WSMan:\localhost\client\TrustedHosts -Value *
+    # If error, run this on Client01 and Client02
+    # Using wildcard trusts everyone. This should be used only in test environments and never permanently.
+    # Enter yes when prompted
+    set-item WSMan:\localhost\client\TrustedHosts -Value *
 
 #This will work in Lab environment
 
 #m4-02
-#Variables in current console
-Get-ChildItem ENV: | more
+    #Variables in current console
+    Get-ChildItem ENV: | more
 
-$env:Computername
+    $env:Computername
 
-Get-Variable | More
+    Get-Variable | More
 
-#Version of PowerShell
-$PSVersionTable
+    #Version of PowerShell
+    $PSVersionTable
 
-#Create variable for remote computer
-$ComputerName = “Client02”
-$ComputerName
-Write-Output "The name of the remote computer is $computername"
-Write-Output 'The name of the variable for the remote computername is $computername'
+    #Create variable for remote computer
+    $ComputerName = “Client02”
+    $ComputerName
+    Write-Output "The name of the remote computer is $computername"
+    Write-Output 'The name of the variable for the remote computername is $computername'
 
-#Store Credential
-$credential = Get-Credential
-$credential
+    #Store Credential
+    $credential = Get-Credential
+    $credential
 
-Get-Variable -Name c*
+    Get-Variable -Name c*
 
-# For Enter-PSSession to work need to resolve issues:
-# with DNS
-# with Service Control Manager > Choose another command besides get-service, perhaps get-process
+    # For Enter-PSSession to work need to resolve issues:
+    # with DNS
+    # with Service Control Manager > Choose another command besides get-service, perhaps get-process
 
-#Enter-PSSession -ComputerName $ComputerName -Credential cred
+    #Enter-PSSession -ComputerName $ComputerName -Credential cred
 
-Get-Service -ComputerName $computername
+    Get-Service -ComputerName $computername
 
 #m4-03
 #Using Computername parameter
-Get-Service –computername $ComputerName | select Name,Status
+    Get-Service –computername $ComputerName | select Name,Status
 
-#Using PSSession
-Gcm *-PSSession
+    #Using PSSession
+    Gcm *-PSSession
 
-#Create a PowerShell session for a remote system
-$ComputerName = “Client02”
-$credential = Get-Credential
-New-PSSession -ComputerName $ComputerName -Credential $credential
-Enter-PSSession -Name $ComputerName
-Get-PSSession
-Enter-PSSession -Id 2
-Get-PSSession
-Remove-PSSession -id 2
-Get-PSSession
+    #Create a PowerShell session for a remote system
+    $ComputerName = “Client02”
+    $credential = Get-Credential
+    New-PSSession -ComputerName $ComputerName -Credential $credential
+    Enter-PSSession -Name $ComputerName
+    Get-PSSession
+    Enter-PSSession -Id 2
+    Get-PSSession
+    Remove-PSSession -id 2
+    Get-PSSession
 
 #m4-04
 #Running command on Remote System
-help Invoke-command
-$ComputerName = "Client02"
+    help Invoke-command
+    $ComputerName = "Client02"
 
-# For username and password use:
-# Username: Administrator
-# Password is located in file c:/peace...
-$credential = Get-Credential
+    # For username and password use:
+    # Username: Administrator
+    # Password is located in file c:/peace...
+    $credential = Get-Credential
 
-Invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $ComputerName }
+    Invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $ComputerName }
 
-invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
+    invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
 
-$data =  invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
+    $data =  invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
 
-$data | gm
+    $data | gm
 
-$Data | Select Name,Status,Description
+    $Data | Select Name,Status,Description
 
-#On PowerShell Core 
-# Running Remote Commands
-invoke-command -ComputerName DC01 -cred (get-credential) -ScriptBlock { Get-ADUser -Identity felixb | format-list }
+    #On PowerShell 7 
+    # Running Remote Commands
+    invoke-command -ComputerName DC01 -cred (get-credential) -ScriptBlock { Get-ADUser -Identity felixb | format-list }
 
 
 
@@ -95,17 +95,17 @@ invoke-command -ComputerName DC01 -cred (get-credential) -ScriptBlock { Get-ADUs
 
 #m4-06
 #Using New-Cimsession
-$ComputerName = 'Client02'
-$credential = Get-Credential
+    $ComputerName = 'Client02'
+    $credential = Get-Credential
 
-Help New-Cimsession
+    Help New-Cimsession
 
-$cimsession = New-CimSession -ComputerName $ComputerName -Credential $Credential
+    $cimsession = New-CimSession -ComputerName $ComputerName -Credential $Credential
 
-$cimsession
+    $cimsession
 
-Get-CimSession
+    Get-CimSession
 
-Help Get-DNSClientServerAddress
+    Help Get-DNSClientServerAddress
 
-Get-DNSClientServerAddress -CimSession $CimSession
+    Get-DNSClientServerAddress -CimSession $CimSession

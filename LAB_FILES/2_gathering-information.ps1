@@ -46,51 +46,51 @@
 
 # M3-04
 # Demo: Working with Network Information 
-ipconfig                                                                                 
-ipconfig /all
-ipconfig | gm                                                                          
-Get-Command get-NetIP*                                                                                
-Get-NetIPAddress                                                                         
-Get-NetIPConfiguration
+    ipconfig                                                                                 
+    ipconfig /all
+    ipconfig | gm                                                                          
+    Get-Command get-NetIP*                                                                                
+    Get-NetIPAddress                                                                         
+    Get-NetIPConfiguration
 
-GCM get-*DNS* 
-GCM get-DNSClient*                                                                  
-Get-DnsClient                                                                                                                                              
-Get-DnsClientCache                                                                                                                                              
-Get-DnsClientServerAddress                                                               
+    GCM get-*DNS* 
+    GCM get-DNSClient*                                                                  
+    Get-DnsClient                                                                                                                                              
+    Get-DnsClientCache                                                                                                                                              
+    Get-DnsClientServerAddress                                                               
 
 #Map a Network Drive > Use SMB or simple message block so we need to search for SMB related commands
   
-Get-Command *SMB*
-Get-Command *SmbMapping                                                                        
-Help New-SmbMapping -examples
-New-SMBmapping -localPath w: -remotepath \\DC01\Share
-Get-smbmapping
-cd w:\
-dir
+    Get-Command *SMB*
+    Get-Command *SmbMapping                                                                        
+    Help New-SmbMapping -examples
+    New-SMBmapping -localPath w: -remotepath \\DC01\Share
+    Get-smbmapping
+    cd w:\
+    dir
     #In the lab environment, the directory listing will have a different set of files and directories than the video demo
 
 # Demo: Reviewing Event Log Information
 # Run in Windows PowerShell console
 #Last, I want to see the last time the system had a reboot. The easiest way to see this is by finding the 1074 System event in Event Viewer. This event message signifies that the system has restarted. 
-get-command get-*Event*
-help get-eventlog -Examples
-get-eventlog -LogName System | gm
+    get-command get-*Event*
+    help get-eventlog -Examples
+    get-eventlog -LogName System | gm
 
-# Enter each command on a single line
-# last two commands will be enter at the '>>' prompt
-Get-EventLog -log system -newest 1000 |
->>where-object {$_.eventid -eq '1074'} |
->>format-table machinename, username, timegenerated -autosize
+    # Enter each command on a single line
+    # last two commands will be enter at the '>>' prompt
+    Get-EventLog -log system -newest 1000 |
+    >>where-object {$_.eventid -eq '1074'} |
+    >>format-table machinename, username, timegenerated -autosize
 
 
 #M3-04
 # Demo: Using Get-ComputerInfo
 # Run in WindowsPowerShell
-help Get-ComputerInfo
-help Get-ComputerInfo -Examples
-Get-ComputerInfo | more
-Get-ComputerInfo -Property *memory*
+    help Get-ComputerInfo
+    help Get-ComputerInfo -Examples
+    Get-ComputerInfo | more
+    Get-ComputerInfo -Property *memory*
 
 
 #m3-06-lab

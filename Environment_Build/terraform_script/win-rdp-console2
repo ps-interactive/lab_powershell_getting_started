@@ -167,9 +167,10 @@ if ($r -eq 0)
     
     #pop a file over the c$ so the client knows it can join the domain now :) #may need to write a test connection in here to make sure it isn't missing.
     #can import from list in github once that is setup! I have code lying around for that somewhere :) Oh and this way we could create a whole commond AD dataset! YAAAS lets do that.
-    #Added psadmin user
+    #Added psadmin and felixb users
     $setpass = ConvertTo-SecureString "P@ssW0rD!" -AsPlainText -Force
     New-ADUser -Path 'CN=Users,DC=company,DC=co' -SamAccountName psadmin -Name psadmin -Surname Admin -GivenName PowerShell -UserPrincipalName psadmin@company.co -AccountPassword $setpass -ChangePasswordAtLogon $false -Enabled $True
+    New-ADUser -Path 'CN=Users,DC=company,DC=co' -SamAccountName felixb -Name felixb -Surname Felix -GivenName Bender -UserPrincipalName felixb@company.co -AccountPassword $setpass -ChangePasswordAtLogon $false -Enabled $True
     
     #Existing Users
     new-aduser M.Bender 

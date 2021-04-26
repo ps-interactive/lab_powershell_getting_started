@@ -1,5 +1,5 @@
+# Lab 1 - PowerShell: Getting Started
 # Module - Gathering Information with PowerShell
-
 
 ##### Notes and helpful Items - PLEASE READ #####
 # USE ALT+Z to toggle Word Wrap on the remarks for easier reading in VS Code.

@@ -1,4 +1,5 @@
-# Module - PowerShell Basics
+# Lab 1 - PowerShell: Getting Started
+# Courses: Introduction to PowerShell and PowerShell Basics
 
 ##### Notes and helpful Items - PLEASE READ #####
 # USE ALT+Z to toggle Word Wrap on the remarks for easier reading in VS Code.
@@ -23,13 +24,20 @@
 #####
 
 # Pre-Lab Setup Steps - Complete before starting labs!!!
-# Add Client01 to Domain of company.co
-    # Steps
-    # 1) In the Lab_Files folder, right-click run-domainjoin.ps1 and choose 'Run as administrator'.
-    # 2) When prompted, enter username of Administrator and password from the companypw.txt file in LAB_Files directory.
-    # 3) After completing, Client01 will reboot and you may continue with the lab challenges.
+    # Add Client01 to Domain of company.co
+        # Steps
+        # 1) In the Lab_Files folder, right-click run-domainjoin.ps1 and choose 'Run as administrator'.
+        # 2) When prompted, enter username of Administrator and password from the companypw.txt file in LAB_Files directory.
+        # 3) After completing, Client01 will reboot and you may continue with the lab challenges.
 
-# Introduction to PowerShell
+    #Update Help in PowerShell 7
+        # Steps
+        # 1) Right-click PowerShell 7 icon and choose 'Run as administrator' option.
+        # 2) Enter the following command and close console when completed:
+            update-help -SourcePath "c:\users\administrator\desktop\Lab_Files\pshelp"
+            #NOTE: You may receive errors for some updates failing. This is normal and can be ignored.
+
+# Module - Introduction to PowerShell
 # Demo: Using PowerShell to Report on Stopped Server Services
     # Run these commands in Windows PowerShell console as Administrator
     # Open Windows PowerShell
@@ -107,18 +115,7 @@
 
 
 ## Demo: Finding Answers in the PowerShell Console
-    # Run as a normal user with PowerShell 7
-    
-    # Using Get-Help without help updated
-        get-help                           
-        help                  
-        get-help *Service* | more                        
-        help get-service            
-
-    # Open PowerShell 7 and Run as Administrator (right-click icon)
-    # Updating PowerShell 7
-        update-help -SourcePath "c:\users\administrator\desktop\Lab_Files\pshelp"
-            #NOTE: You may receive errors for some updates failing. This is normal and can be ignored.
+    # Run PowerShell 7 as Administrator
 
     # Using Help w/ different parameters 
         help get-service

@@ -10,7 +10,7 @@
 
 # The lab environment has no internet access so actions requiring the Internet will not be performed.
 
-# All remote actions performed with Client02 as a target the video course demos will be performed with DC01 instead.
+# All remote actions performed with Client02 as a target in the video course demos will be performed with DC01 instead.
 
 # The commands below are not intended to be run in VS Code. They are intended to be type (preferred) or copy/pasted into the PowerShell console used in each demo.
 
@@ -22,6 +22,8 @@
 
 #IMPORTANT: Prior to beginning this lab, make sure you have completed the setup tasks in ./0_Start-Here-setup-lab.ps1!!
 #####
+
+### Challenge begins here###
 
 # Pre-Lab Setup Steps - Complete before starting labs!!!
     # Add Client01 to Domain of company.co

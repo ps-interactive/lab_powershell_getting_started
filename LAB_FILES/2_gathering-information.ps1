@@ -10,7 +10,7 @@
 
 # The lab environment has no internet access so actions requiring the Internet will not be performed.
 
-# All remote actions performed with Client02 as a target the video course demos will be performed with DC01 instead.
+# All remote actions performed with Client02 as a target in the video course demos will be performed with DC01 instead.
 
 # The commands below are not intended to be run in VS Code. They are intended to be type (preferred) or copy/pasted into the PowerShell console used in each demo.
 
@@ -19,6 +19,8 @@
 # Some demo commands have been modified to work within the lab environment. They will perform the same general tasks, but may have different references such as file directories. Also, any tasks requiring internet access will be skipped.
 
 # Use of cls in code is to clear-host or clear the screen during demos. This can be skipped during your labs if desired.
+
+### Challenge begins here###
 
 # Demo: Finding Your Way in PowerShell
     # Run these commands in Windows PowerShell console as Administrator

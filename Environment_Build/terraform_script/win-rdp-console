@@ -167,6 +167,15 @@ if ($r -eq 0){
         $Shortcut.Save()
         #$Host.UI.RawUI.BackgroundColor = 'DarkBlue'
 
+    # Windows PowerShell ISE link
+        $TargetFile = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ISE.exe"
+        $ShortcutFile = "C:\Users\Public\Desktop\Windows PowerShell ISE(x64).lnk"
+        $WScriptShell = New-Object -ComObject WScript.Shell
+        $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+        $Shortcut.TargetPath = $TargetFile
+        $Shortcut.IconLocation = "%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell_ise.exe"
+        $Shortcut.Save()
+
     # PowerShell 7 link
         $TargetFile = "C:\Program Files\PowerShell\7\pwsh.exe"
         $ShortcutFile = "C:\Users\Public\Desktop\Powershell 7(x64).lnk"

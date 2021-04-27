@@ -23,19 +23,39 @@
 ### Challenge begins here###
 
 # Demo: Requirements for Remoting on Windows PowerShell
-    # Run these commands in Windows PowerShell console as Administrator
-    # Note: Trusted Hosts has already been set on clients
+    # Lab environment is configured for remote management
+    # Commands below for reference to video only
+    # Enable PSRemoting on clients
+        # Enable-PSRemoting -force
+
+    # Add groups to local security
+        # Set-PSSessionConfiguration -Name Microsoft.PowerShell -ShowSecurityDescriptorUI
+
+    # Firewall changes for WMI and Remote Service Management
+        # Get-NetFirewallRule | Where-Object -Like "Windows Management Instrumentation*" | Set-NetFirewallRule -Enabled True -Verbose
+
+        # Get-NetFirewallRule | Where-Object -Like "Remote Service Management" | Set-NetFirewallRule -Enabled True -Verbose
     
-    # Verify trusted hosts on client01
-        get-item WSMan:\localhost\client\TrustedHosts -Value *
+    # Run these commands in Windows PowerShell console as Administrator
 
     # Verify Access to DC01
-        get-service -computername DC01
+        Get-Service -computername DC01
+
+    # Enter remote PS Session
+        Enter-PSSession -ComputerName DC01
+
+    # Commands on remote system
+        Get-Service
+        Exit
 
 # Demo: Working with Variables
-    # Viewing Variables in current console
+    # Run these commands in Windows PowerShell console as Administrator
+ 
+    # Viewing built-in environment variables in current console
         Get-ChildItem ENV: | more
         $env:Computername
+    
+    # Viewing PowerShell-specific variables
         Get-Variable | More
 
     # Viewing Version of PowerShell
@@ -47,34 +67,63 @@
         Write-Output "The name of the remote computer is $computername"
         Write-Output 'The name of the variable for the remote computername is $computername'
 
-    #Store credentials in a variable
+    # Store credentials in a variable
+        # When prompted for credentials, use company\administrator and password from the ./LAB_FILES/companypw.txt file
         $credential = Get-Credential
         $credential
+
+    # Run these commands in PowerShell 7 console as Administrator
+    
+    # Store credentials in PowerShell 7
+        # For username and password use:
+            # Username: Administrator
+            # Password is located in ./companypw.txt in LAB_Files
+        
+        $credential
+            # No response as variables are stored in scope of console
+        $cred = Get-Credential
+        $cred
+
+    # Run these commands in Windows PowerShell console as Administrator
+    
+    # Use variable for Computername
         Get-Variable -Name c*
         Get-Service -ComputerName $computername
 
 # Demo: Remoting with PowerShell
+    # Run these commands in Windows PowerShell console as Administrator    
+    
     #Using -Computername parameter for remote information
-        Get-Service –computername $ComputerName | select Name,Status
+        $ComputerName = "DC01"
+        Get-Service –computername $ComputerName
             # Note: All PowerShell cmdlets do not support -computername
 
-    #Using PSSession
-        Gcm *-PSSession
-
     #Create a PowerShell session for a remote system
-        $ComputerName = “DC01”
+        # For username and password use:
+            # Username: Administrator
+            # Password is located in ./companypw.txt in LAB_Files
+
+        Get-Command *-PSSession    
         $credential = Get-Credential
         New-PSSession -ComputerName $ComputerName -Credential $credential
 
-    # Working with PSSession
+    # Access PSSession
+        Enter-PSSession -Name WinRM1
         Enter-PSSession -Name $ComputerName
+            # Commands on Remote System
+            $env:Computername
+            exit
         Get-PSSession
-        Enter-PSSession -Id 2
-        Get-PSSession
-        Remove-PSSession -id 2
+        Enter-PSSession -Id 1
+            # Commands on Remote System
+            $env:Computername
+            exit
+        Remove-PSSession -id 1
         Get-PSSession
 
 # Demo: Remoting with Invoke-Command
+    # Run these commands in Windows PowerShell console as Administrator 
+    
     # Help with Invoke-Command
         help Invoke-command
         $ComputerName = "DC01"
@@ -87,26 +136,34 @@
 
     # Running get-service on remote system
         Invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $ComputerName }
-            #Note: This fails since you cannot pass variables to remote systems in this manner
+            #Note: This fails since you cannot pass variables to remote systems
     
-    # Passing variable to remote syste with $using:
+    # Passing variable to remote syste with Using:
         invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
 
     # More Information on $using in help
         help about_Remote_Variables
 
-    # Working with remote computer data
+    # Adding remote computer data to variable
         $data =  invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
-        $data | gm
-        $Data | Select Name,Status,Description
+        $data | get-member
+        $Data | Select-object Name,Status,Description
 
-    #On PowerShell 7 
+    # Run these commands in PowerShell 7 console as Administrator
+    
     # Running Remote Commands
+        # For username and password use:
+            # Username: Administrator
+            # Password is located in ./companypw.txt in LAB_Files
         invoke-command -ComputerName DC01 -cred (get-credential) -ScriptBlock { Get-ADUser -Identity felixb | format-list }
 
 # Demo: Remoting with New-CimSession
+    # Run these commands in Windows PowerShell console as Administrator 
     
     # Help with New-Cimsession
+        # For username and password use:
+            # Username: Administrator
+            # Password is located in ./companypw.txt in LAB_Files
         $ComputerName = 'DC01'
         $credential = Get-Credential
         Help New-Cimsession

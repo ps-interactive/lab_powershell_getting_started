@@ -63,8 +63,9 @@
 
 # Demo: Walking Through Parameterized Script Steps
     # Run this lab in Visual Studio Code as Administrator
+    # When asked to specify a computer name use DC01
 
-    # For this demo, open the follow scripts in Visual Studio Code and follow along with video
+    # For this demo, open the follow scripts in Visual Studio Code and follow along with video:
         code ./Get-ServiceExamplept1-base.ps1
         code ./Get-ServiceExamplept2-base.ps1
         code ./Get-ServiceExamplept3-base.ps1
@@ -76,9 +77,8 @@
         code ./Get-ServiceExamplept3.ps1
         code ./Get-ServiceExamplept4.ps1
 
-Demo: 
-
 # Demo: Building a Remote Information Gathering Script in PowerShell
+    # 
     # For this demo, open the follow scripts in <> and run each line of code along with video
     code ./ScriptTasks.ps1
     code ./ScriptCommands.ps1
@@ -89,6 +89,8 @@ Demo:
     # Start following along with the video on ScriptTasks.ps1 and ScriptCommands.ps1
     # This will walk you through each command.
     # Optionally, you can run each of the commands as is done in the video
+    
+    # When prompted for credentials, use Administrator and the password in ./LAB_FILES/companypw.txt
 
     # As all of the code is filled in for you in get-helpdesksupportdata.ps1, you can:
         # Review the code live along with the video
@@ -98,8 +100,7 @@ Demo:
             # Add additional examples to help files
             # Try changing the output of the script
             # Customize the credential window prompt on line 49
-        Use the video and the final script, get-helpdesksupportdata.ps1 as a guide and reference
+            #Use the video and the final script, get-helpdesksupportdata.ps1 as a guide and reference
 
-    # Try making up your own examples while you are here!
 
 

@@ -108,17 +108,21 @@
         New-PSSession -ComputerName $ComputerName -Credential $credential
 
     # Access PSSession
-        Enter-PSSession -Name WinRM1
-        Enter-PSSession -Name $ComputerName
+        # Session Name and Id values may be different. Enter value in console output. 
+        
+        #neter
+        Enter-PSSession -Name WinRM1 # Enter value in console output. 
             # Commands on Remote System
             $env:Computername
             exit
         Get-PSSession
-        Enter-PSSession -Id 1
+
+        # Enter PSSession with Id number
+        Enter-PSSession -Id 1 # Enter value in console output. 
             # Commands on Remote System
             $env:Computername
             exit
-        Remove-PSSession -id 1
+        Remove-PSSession -id 1 #Enter value in console output. 
         Get-PSSession
 
 # Demo: Remoting with Invoke-Command
@@ -147,7 +151,6 @@
     # Adding remote computer data to variable
         $data =  invoke-command -ComputerName $ComputerName -Credential $credential -ScriptBlock { get-service -ComputerName $using:ComputerName }
         $data | get-member
-        $Data | Select-object Name,Status,Description
 
     # Run these commands in PowerShell 7 console as Administrator
     

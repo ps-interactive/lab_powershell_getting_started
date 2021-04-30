@@ -76,6 +76,10 @@ Write-Host “IE Enhanced Security Configuration (ESC) has been disabled.” -Fo
 $message3 = "IE Enhanced Security Disabled"; $message3 | out-file c:/peaceinourtime.txt -append;
 }
 
+function Disable-ServerManager {
+    New-ItemProperty -Path HKCU:\Software\Microsoft\ServerManager -Name DoNotOpenServerManagerAtLogon -PropertyType DWORD -Value “0x1” –Force
+}
+
 function key_pull () {
     #must have cred_init ran prior to running this function in the same boot session!
     #set stattus via scp
@@ -120,6 +124,8 @@ if ($r -eq 0){
     
     Disable-ieESC
 
+    Disable-ServerManager
+    
     New-NetFirewallRule -DisplayName "Allow Inbound From DC" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow
 
     #chocolate install

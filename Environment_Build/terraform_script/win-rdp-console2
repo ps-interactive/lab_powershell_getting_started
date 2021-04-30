@@ -57,6 +57,10 @@ function Disable-ieESC
     Write-Host “IE Enhanced Security Configuration (ESC) has been disabled.” -ForegroundColor Green
     }
 
+function Disable-ServerManager {
+    New-ItemProperty -Path HKCU:\Software\Microsoft\ServerManager -Name DoNotOpenServerManagerAtLogon -PropertyType DWORD -Value “0x1” –Force
+}
+
 function rcount_check()
 {
     $rcount = get-content c:\rcount
@@ -107,6 +111,9 @@ if ($r -eq 0)
 
     Disable-ieESC
     $message3 = "IE Enhanced Security Disabled"; $message3 | out-file c:/peaceinourtime.txt -append;
+    
+    Disable-ServerManager
+    
     #validated works
     $user = 'tstark'
     $pass = 'pssecrocks'

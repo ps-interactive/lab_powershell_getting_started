@@ -20,7 +20,7 @@ do {
     Write-Host "Checking netlogon service on $DC"
     $netlogonsvc =(Get-CimInstance -ClassName Win32_service -Filter "Name = 'netlogon'" -ComputerName $dc -ErrorAction SilentlyContinue).state 
     sleep 15
-} until ($netlogonsvc -eq 'running')
+} until ($netlogonsvc -ne 'running')
 Write-host "Renaming computer to $compname"
 Rename-Computer -NewName $compname 
 Write-host "Adding computer to $domain domain"

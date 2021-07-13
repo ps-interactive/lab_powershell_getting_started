@@ -2,5 +2,15 @@
 # Due to technical reasons, the client will auto-logon with the local administrator account upon reboot.
 # When required, domain credentials will be provided with commands to perform certain actions
 
-# Join computer to domain using password from c:/companypw.txt
-add-computer -domain company.co -server DC01 -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart | out-file "c:\logging.txt" -append
+# Rename Computer and Join computer to domain using password from c:/companypw.txt
+$domain = "company.co"
+$compname = "client01"
+$pwd = get-content c:/users/administrator/desktop/lab_files/companypw.txt
+$secpwd = ConvertTo-SecureString $pwd -AsPlainText -Force
+$admin = "company\administrator"
+$Cred = New-Object System.Management.Automation.PSCredential ($admin, $secpwd)
+Write-host "Renaming computer to $compname"
+Rename-Computer -NewName $compname 
+Write-host "Adding computer to $domain domain"
+Add-Computer -domain $domain -server DC01 -credential $Cred 
+Restart-Computer -Force

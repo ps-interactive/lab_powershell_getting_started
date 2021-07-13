@@ -9,7 +9,7 @@ $pwd = get-content c:/users/administrator/desktop/lab_files/companypw.txt
 $secpwd = ConvertTo-SecureString $pwd -AsPlainText -Force
 $admin = "company\administrator"
 $Cred = New-Object System.Management.Automation.PSCredential ($admin, $secpwd)
-$dc = "DC01"
+$dc = "172.31.24.10"
 Write-Host "This script will rename the computer to $compname, and add it into domain $domain"
 Write-host ""
 Write-host "Because the domain controller $dc is building, this process may take a few minutes to complete"
@@ -21,9 +21,9 @@ do {
     $netlogonsvc =(Get-CimInstance -ClassName Win32_service -Filter "Name = 'netlogon'" -ComputerName $dc -ErrorAction SilentlyContinue).state 
     Write-host "Current State: $netlogonsvc"
     sleep 5
-} until ($netlogonsvc -ne 'running')
+} until ($netlogonsvc -eq 'running')
 Write-host "Renaming computer to $compname"
 Rename-Computer -NewName $compname 
 Write-host "Adding computer to $domain domain"
-Add-Computer -domain $domain -server DC01 -credential $Cred 
-Restart-Computer -Force
+Add-Computer -domain $domain -credential $Cred 
+#Restart-Computer -Force

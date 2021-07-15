@@ -9,20 +9,23 @@ $dc = "DC01"
 # Message
 Write-Host "This script will rename the computer to $computername, and add it into domain $domain"
 Write-host ""
-Write-host "Because the domain controller $dc is building, this process may take a few minutes to complete"
-Write-host ""
-Write-host "After the script completes and the computer reboots, you can begin the lab"
-Write-host ""
+
 
 # Rename Computer
 
 Write-host "Renaming computer to "
 Rename-Computer -NewName $computername 
 # Join computer to domain using password from c:/companypw.txt
+Write-host "Because the domain controller $dc is building, this process may take a 7-10 minutes to complete"
+Write-host ""
+Write-host "After the script completes and the computer reboots, you can begin the lab"
+Write-host ""
+
 do {
-    Write-Host "Checking netlogon service on $DC"
+    Write-Host "Checking netlogon service on $DC - Script will continue when domain controller is available"
     $netlogonsvc =(Get-CimInstance -ClassName Win32_service -Filter "Name = 'netlogon'" -ComputerName $dc -ErrorAction SilentlyContinue).state 
     Write-host "Current State: $netlogonsvc" #Remark out when production
     sleep 5
 } until ($netlogonsvc -eq 'running')
+Write-host "Adding computer to $domain domain"
 add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart | out-file "c:\logging.txt" -append

@@ -33,7 +33,7 @@
         #   - Username: company\administrator
         #   - Password: Enter the password from the companypw.txt file located in the LAB_FILES directory
         #   NOTE: Due to the domain controller building in the background,
-        #        it may take 3-5 minutes to complete.
+        #        it may take 7-10 minutes to complete.
         # 3) After completing, Client01 will reboot and you may continue with the lab challenges.
 
     #Update Help in PowerShell 7

@@ -2,28 +2,42 @@
 # Due to technical reasons, the client will auto-logon with the local administrator account upon reboot.
 # When required, domain credentials will be provided with commands to perform certain actions
 
-# Rename Computer and Join computer to domain using password from c:/companypw.txt
+#variables
 $domain = "company.co"
-$compname = "client01"
+$computername = "Client01"
+$dc = "DC01"
 $pwd = get-content c:/users/administrator/desktop/lab_files/companypw.txt
 $secpwd = ConvertTo-SecureString $pwd -AsPlainText -Force
 $admin = "company\administrator"
 $Cred = New-Object System.Management.Automation.PSCredential ($admin, $secpwd)
-$dc = "172.31.24.10"
-Write-Host "This script will rename the computer to $compname, and add it into domain $domain"
+# Message
+Write-Host "This script will rename the computer to $computername, and add it into domain $domain"
 Write-host ""
-Write-host "Because the domain controller $dc is building, this process may take a few minutes to complete"
+
+
+# Rename Computer
+
+Write-host "Renaming computer to "
+Rename-Computer -NewName $computername -PassThru -Verbose 
+# Join computer to domain using password from c:/companypw.txt
+Write-host ""
+Write-host "Because the domain controller $dc is building, this process may take a 7-10 minutes to complete"
 Write-host ""
 Write-host "After the script completes and the computer reboots, you can begin the lab"
 Write-host ""
+$i = 30
 do {
-    Write-Host "Checking netlogon service on $DC"
+    
+    Write-Host "Checking netlogon service on $DC - Script will continue when domain controller is available"
     $netlogonsvc =(Get-CimInstance -ClassName Win32_service -Filter "Name = 'netlogon'" -ComputerName $dc -ErrorAction SilentlyContinue).state 
-    Write-host "Current State: $netlogonsvc"
-    sleep 5
+    Write-host "Current State: $netlogonsvc" #Remark out when production
+    Write-host ""
+    Write-host ""
+    # sleep 20
 } until ($netlogonsvc -eq 'running')
-Write-host "Renaming computer to $compname"
-Rename-Computer -NewName $compname 
+
 Write-host "Adding computer to $domain domain"
-Add-Computer -domain $domain -credential $Cred 
-#Restart-Computer -Force
+Write-host ""
+# add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart
+Add-Computer -domain $domain -credential $Cred -PassThru -Verbose
+sleep 30

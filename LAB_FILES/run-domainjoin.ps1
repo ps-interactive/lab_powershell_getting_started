@@ -17,7 +17,7 @@ Write-host ""
 
 # Rename Computer
 
-Write-host "Renaming computer to "
+Write-host "Renaming computer to $computername"
 Rename-Computer -NewName $computername -PassThru -Verbose 
 # Join computer to domain using password from c:/companypw.txt
 Write-host ""

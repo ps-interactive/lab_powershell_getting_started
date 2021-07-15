@@ -20,12 +20,17 @@ Write-host "Because the domain controller $dc is building, this process may take
 Write-host ""
 Write-host "After the script completes and the computer reboots, you can begin the lab"
 Write-host ""
-
+$i = 30
 do {
+    
     Write-Host "Checking netlogon service on $DC - Script will continue when domain controller is available"
     $netlogonsvc =(Get-CimInstance -ClassName Win32_service -Filter "Name = 'netlogon'" -ComputerName $dc -ErrorAction SilentlyContinue).state 
     Write-host "Current State: $netlogonsvc" #Remark out when production
-    sleep 5
+    Write-host ""
+    Write-Host "Time Elapsed:$i"
+    $i=$1+30
+    sleep 30
 } until ($netlogonsvc -eq 'running')
+
 Write-host "Adding computer to $domain domain"
-add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart | out-file "c:\logging.txt" -append
+add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart

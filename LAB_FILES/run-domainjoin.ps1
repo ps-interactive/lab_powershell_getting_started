@@ -40,4 +40,6 @@ Write-host "Adding computer to $domain domain"
 Write-host ""
 # add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart
 Add-Computer -domain $domain -credential $Cred -PassThru -Verbose
-sleep 30
+write-host ""
+write-host "Rebooting Computer..."
+sleep 5

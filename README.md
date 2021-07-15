@@ -15,3 +15,5 @@ Content and Environment build assets for the Powershell Getting Started labs (1 
 
 Update History:
 
+- 07/16/2021: Updated run-domainjoin.ps1 to rename computer, wait for netlogon service, and add to domain w/ reboot.
+

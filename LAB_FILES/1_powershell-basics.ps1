@@ -28,7 +28,12 @@
 # Pre-Lab Setup Steps - Complete before starting labs!!!
     # Add Client01 to Domain of company.co
         # Steps
-        # 1) In the Lab_Files folder, right-click run-domainjoin.ps1 and choose 'Run with PowerShell'.
+        # 1) In the LAB_FILES folder on the desktop, right-click run-domainjoin.ps1 and choose 'Run with PowerShell'.
+        # 2) In the credential message box, enter the following information
+        #   - Username: company\administrator
+        #   - Password: Enter the password from the companypw.txt file located in the LAB_FILES directory
+        #   NOTE: Due to the domain controller building in the background,
+        #        it may take 3-5 minutes to complete.
         # 3) After completing, Client01 will reboot and you may continue with the lab challenges.
 
     #Update Help in PowerShell 7

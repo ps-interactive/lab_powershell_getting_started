@@ -5,7 +5,10 @@
 #variables
 $computername = "Client01"
 $dc = "DC01"
-
+$pwd = get-content c:/users/administrator/desktop/lab_files/companypw.txt
+$secpwd = ConvertTo-SecureString $pwd -AsPlainText -Force
+$admin = "company\administrator"
+$Cred = New-Object System.Management.Automation.PSCredential ($admin, $secpwd)
 # Message
 Write-Host "This script will rename the computer to $computername, and add it into domain $domain"
 Write-host ""
@@ -28,9 +31,11 @@ do {
     Write-host "Current State: $netlogonsvc" #Remark out when production
     Write-host ""
     Write-Host "Time Elapsed:$i"
-    $i=$1+30
-    sleep 30
+    $i=$i+30
+    Write-host ""
+    sleep 20
 } until ($netlogonsvc -eq 'running')
 
 Write-host "Adding computer to $domain domain"
-add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart
+# add-computer -domain company.co -server $dc -credential (Get-credential -Message "Enter Administrator and password from the file c:\companypw.txt. Computer will automatically restart.") -force -verbose -restart
+Add-Computer -domain $domain -credential $Cred 

@@ -27,10 +27,16 @@ Write-host "After the script completes and the computer reboots, you can begin t
 Write-host ""
 $i = 30
 do {
-    
+    #sleep 10
     Write-Host "Checking netlogon service on $DC - Script will continue when domain controller is available"
     $netlogonsvc =(Get-CimInstance -ClassName Win32_service -Filter "Name = 'netlogon'" -ComputerName $dc -ErrorAction SilentlyContinue).state 
-    Write-host "Current State: $netlogonsvc" #Remark out when production
+    
+    if ($netlognsvc -ne "running") {
+        write-host "Current State: Unavailable"
+    } else { 
+        Write-host "Current State: $netlogonsvc" 
+    }
+    
     Write-host ""
     Write-host ""
     # sleep 20
@@ -42,4 +48,4 @@ Write-host ""
 Add-Computer -domain $domain -credential $Cred -PassThru -Verbose
 write-host ""
 write-host "Rebooting Computer..."
-sleep 5
+sleep 5 

@@ -48,4 +48,4 @@ Write-host ""
 Add-Computer -domain $domain -credential $Cred -PassThru -Verbose
 write-host ""
 write-host "Rebooting Computer..."
-sleep 5 
+restart-computer -Force -Timeout 5

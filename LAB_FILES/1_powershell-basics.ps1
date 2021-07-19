@@ -30,7 +30,7 @@
     #Update Help in PowerShell 7 and Rename Computer
         # Steps
         # 1) Right-click PowerShell 7 icon and choose 'Run as administrator' option.
-        # 2) Enter the following command and close console when completed:
+        # 2) Enter the following command:
             update-help -SourcePath "c:\users\administrator\desktop\Lab_Files\pshelp"
             #NOTE: You may receive errors for some updates failing. This is normal and can be ignored.
         # 3) Enter the following command:

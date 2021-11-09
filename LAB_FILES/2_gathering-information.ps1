@@ -102,7 +102,7 @@
         Get-Command *SMB*
         Get-Command *SmbMapping                                                                        
         Help New-SmbMapping -examples
-        New-SMBmapping -localPath w: -remotepath \\DC01\Share
+        New-SMBmapping -localPath w: -remotepath \\DC01\Shared
         Get-smbmapping
         cd w:\
         dir
